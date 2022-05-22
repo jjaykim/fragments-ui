@@ -106,5 +106,3 @@ dist
 # Parcel build files and cache difrctory
 dist/
 .parcel-cache/
-
-.env
