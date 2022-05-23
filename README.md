@@ -12,12 +12,12 @@ At root, run npm install
 npm install
 ```
 
+## .env Setting
+
+Please create `.env` file at your root, and make sure fill out your Environment Variables by referring to [env.example](.env.example)
+
 Start the web app locally
 
 ```sh
 npm start
 ```
-
-## .env Setting
-
-Please create `.env` file at your root, and make sure fill out your Environment Variables by referring to [env.example](.env.example)
