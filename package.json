@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx parcel index.html",
-    "serve": "parcel serve index.html"
+    "serve:local": "cp ./env/.env.development ./.env && parcel serve index.html",
+    "serve:aws": "cp ./env/.env.production ./.env && parcel serve index.html"
   },
   "repository": {
     "type": "git",
