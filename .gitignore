@@ -106,3 +106,5 @@ dist
 # Parcel build files and cache difrctory
 dist/
 .parcel-cache/
+
+.DS_Store
