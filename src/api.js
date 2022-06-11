@@ -1,5 +1,6 @@
 // fragments microservice API
 const apiUrl = process.env.API_URL;
+console.log(apiUrl);
 
 /**
  * Given an authenticated user, request all fragments for this user from the
