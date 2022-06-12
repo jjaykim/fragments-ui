@@ -19,5 +19,8 @@ Please create `.env` file at your root, and make sure fill out your Environment 
 Start the web app locally
 
 ```sh
-npm start
+npm run serve:local: runs app with `.env.development`
+npm run serve:aws: runs app with `.env.production`
 ```
+
+[More Details](package.json)
