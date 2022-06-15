@@ -50,31 +50,38 @@ async function init() {
   fragmentForm.addEventListener('submit', postFunction);
 
   async function postFunction(e) {
-    e.preventDefault();
-    console.log('input in index.html: ' + document.getElementById('textFragment').value);
+    try {
+      e.preventDefault();
+      console.log(
+        'input in index.html: ' + document.getElementById('textFragment').value
+      );
 
-    // Creates a new fragment
-    await postFragment(user, document.getElementById('textFragment').value);
+      // Creates a new fragment
+      await postFragment(user, document.getElementById('textFragment').value);
 
-    // Gets user's all fragments
-    const fragment = await getUserFragments(user);
-    console.log('fragment data: ', { fragment });
+      // Gets user's all fragments
+      const fragment = await getUserFragments(user);
+      console.log('fragment data: ', { fragment });
 
-    // Gets user's all fragment data
-    if (!!fragment) {
-      const getfragmentData = fragment.fragments.map(async (fragmentId, idx) => {
-        return await getFragmentById(user, fragmentId).then((fragmentData) => {
-          return `${idx + 1}: ${fragmentData.data['fragmentData']}`;
+      // Gets user's all fragment data
+      if (!!fragment) {
+        const getfragmentData = fragment.fragments.map(async (fragmentId, idx) => {
+          return await getFragmentById(user, fragmentId).then((fragmentData) => {
+            console.log(fragmentData);
+            return `${idx + 1}: ${fragmentData}`;
+          });
         });
-      });
 
-      const fragmentData = await Promise.all(getfragmentData);
+        const fragmentData = await Promise.all(getfragmentData);
 
-      // Display user all fragments
-      fragmentSection.querySelector('.fragment').innerText = fragmentData.join('\n');
+        // Display user all fragments
+        fragmentSection.querySelector('.fragment').innerText = fragmentData.join('\n');
 
-      // init text input box
-      document.getElementById('textFragment').value = '';
+        // init text input box
+        document.getElementById('textFragment').value = '';
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 }

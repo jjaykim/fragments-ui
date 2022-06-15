@@ -31,7 +31,7 @@ export async function getUserFragments(user) {
  * @param {string} id
  */
 export async function getFragmentById(user, id) {
-  console.log('Requesting user fragments data by id...');
+  console.log('Requesting user fragments data by id...' + id);
 
   try {
     const res = await fetch(`${apiUrl}/v1/fragments/${id}`, {
@@ -42,11 +42,11 @@ export async function getFragmentById(user, id) {
       throw new Error(`${res.status} ${res.statusText}`);
     }
 
-    const data = await res.json();
+    const data = await res.text();
 
-    console.log('Got user fragments data with given id', { data });
+    console.log(`Got user fragments data with given id, ${data}`);
 
-    return { data };
+    return data;
   } catch (err) {
     console.error('Unable to call GET /v1/fragment/:id', { err });
   }
