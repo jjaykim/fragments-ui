@@ -2,12 +2,12 @@
   "name": "fragments-ui",
   "version": "1.0.0",
   "description": "Fragments front-end API (CCP-Demo)",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx parcel index.html",
-    "serve:local": "cp ./env/.env.development ./.env && parcel serve index.html",
-    "serve:aws": "cp ./env/.env.production ./.env && parcel serve index.html"
+    "start": "npx parcel src/index.html",
+    "build": "npx parcel build src/index.html",
+    "serve:local": "cp ./env/.env.development ./.env && parcel serve src/index.html",
+    "serve:aws": "cp ./env/.env.production ./.env && parcel serve src/index.html"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/jjaykim/fragments-ui#readme",
   "devDependencies": {
-    "parcel": "^2.5.0",
+    "parcel": "^2.6.2",
     "path-browserify": "^1.0.1",
     "process": "^0.11.10",
     "querystring-es3": "^0.2.1"

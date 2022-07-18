@@ -6,7 +6,8 @@ async function init() {
   const userSection = document.querySelector('#user');
   const loginBtn = document.querySelector('#login');
   const logoutBtn = document.querySelector('#logout');
-  const fragmentSection = document.querySelector('#fragment');
+  // const fragmentSection = document.querySelector('#fragment');
+  const textFormSection = document.querySelector('#textFormSection');
 
   // Wire up event handlers to deal with login and logout.
   loginBtn.onclick = () => {
@@ -28,11 +29,13 @@ async function init() {
     return;
   }
 
-  // Do an authenticated request to the fragments API server and log the result
-  getUserFragments(user);
-
   // Log the user info for debugging purposes
   console.log({ user });
+
+  // Do an authenticated request to the fragments API server and log the result
+  // GET /fragments/?expand=1
+  const expandedFragments = await getUserFragments(user, 1);
+  console.log(" user's existing fragments with all metadata: ", expandedFragments);
 
   // Update the UI to welcome the user
   userSection.hidden = false;
@@ -43,45 +46,60 @@ async function init() {
   // Disable the Login button
   loginBtn.disabled = true;
 
+  document.getElementById('types').addEventListener('change', (e) => {
+    e.preventDefault();
+
+    selectedType = e.target.value;
+    console.log(`seleted type: ${selectedType}`);
+  });
+
+  let selectedType = 'text/plain';
+
+  let textForm = document.getElementById('textForm');
+  textForm.addEventListener('submit', handleTextForm);
+
   /**
    * when user submit the text, post that text and get all user text
    */
-  const fragmentForm = document.querySelector('form');
-  fragmentForm.addEventListener('submit', postFunction);
+  async function handleTextForm(e) {
+    e.preventDefault();
 
-  async function postFunction(e) {
     try {
-      e.preventDefault();
       console.log(
-        'input in index.html: ' + document.getElementById('textFragment').value
+        `User input manually: ${document.getElementById('textFragment').value}`
       );
 
-      // Creates a new fragment
-      await postFragment(user, document.getElementById('textFragment').value);
+      await postFragment(
+        user,
+        document.getElementById('textFragment').value,
+        selectedType
+      );
 
-      // Gets user's all fragments
       const fragment = await getUserFragments(user);
-      console.log('fragment data: ', { fragment });
+      console.log('fragment data:', { fragment });
 
       // Gets user's all fragment data
       if (!!fragment) {
         const getfragmentData = fragment.fragments.map(async (fragmentId, idx) => {
           return await getFragmentById(user, fragmentId).then((fragmentData) => {
-            console.log(fragmentData);
-            return `${idx + 1}: ${fragmentData}`;
+            return `${idx + 1}: Content Type: ${fragmentData[0]}   ||   fragment: ${
+              fragmentData[1]
+            }`;
           });
         });
 
         const fragmentData = await Promise.all(getfragmentData);
 
+        console.log('all fragment data', fragmentData);
+
         // Display user all fragments
-        fragmentSection.querySelector('.fragment').innerText = fragmentData.join('\n');
+        document.querySelector('.fragment').innerText = fragmentData.join('\n');
 
         // init text input box
         document.getElementById('textFragment').value = '';
       }
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(`FROM handleTextForm: ${err}`);
     }
   }
 }
