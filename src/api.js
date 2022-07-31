@@ -13,6 +13,7 @@ export async function getUserFragments(user, expand = 0) {
       // Generate headers with the proper Authorization bearer token to pass
       headers: user.authorizationHeaders(),
     });
+
     if (!res.ok) {
       throw new Error(`${res.status} ${res.statusText}`);
     }
@@ -27,8 +28,6 @@ export async function getUserFragments(user, expand = 0) {
 
 /**
  * Gets an authenticated user's fragment data with the given id
- * @param {string} user
- * @param {string} id
  */
 export async function getFragmentById(user, id, ext = '') {
   console.log('Requesting user fragments data by id...' + id);
@@ -65,8 +64,6 @@ export async function getFragmentById(user, id, ext = '') {
 
 /**
  * Creates a new fragment for the current (i.e., authenticated user)
- * @param {string} user
- * @param {string} value
  */
 export async function postFragment(user, value, contentType) {
   console.log('Post fragment data...');
@@ -83,5 +80,26 @@ export async function postFragment(user, value, contentType) {
     console.log('Posted fragments data', { data });
   } catch (err) {
     console.error('Unable to call POST /v1/fragments' + err.message, { err });
+  }
+}
+
+/**
+ * Delete fragment from the server
+ */
+export async function deleteFragment(user, id) {
+  console.log('Delete fragment data...');
+  try {
+    const res = await fetch(`${apiUrl}/v1/fragments/${id}`, {
+      method: 'DELETE',
+      headers: user.authorizationHeaders(),
+    });
+    if (!res.ok) {
+      throw new Error(`${res.status} ${res.statusText}`);
+    }
+    const data = await res.json();
+    console.log('Deleted fragments data', { data });
+    return data;
+  } catch (err) {
+    console.error('Unable to call DELETE /v1/fragments', { err });
   }
 }

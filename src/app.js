@@ -6,6 +6,7 @@ async function init() {
   const userSection = document.querySelector('#user');
   const loginBtn = document.querySelector('#login');
   const logoutBtn = document.querySelector('#logout');
+  const deleteBtn = document.getElementById('deleteBtn');
   // const fragmentSection = document.querySelector('#fragment');
   const textFormSection = document.querySelector('#textFormSection');
 
@@ -102,6 +103,28 @@ async function init() {
       console.log(`FROM handleTextForm: ${err}`);
     }
   }
+
+  deleteBtn.onclick = async () => {
+    try {
+      console.log('Processing Delete All Fragments');
+
+      const fragment = await getUserFragments(user);
+
+      const getfragmentData = fragment.fragments.map(async (fragmentId, idx) => {
+        const deleted = await deleteFragment(user, fragmentId);
+
+        if (deleted.status !== 'ok') {
+          throw new Error(`Failed delete Fragment with id: ${fragmentId}`);
+        } else {
+          console.log(`Fragment with id: ${fragmentId} has been successfully deleted`);
+        }
+      });
+
+      await Promise.all(getfragmentData);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 }
 
 // Wait for the DOM to be ready, then start the app
