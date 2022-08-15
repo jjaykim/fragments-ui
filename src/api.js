@@ -33,9 +33,14 @@ export async function getFragmentById(user, id, ext = '') {
   console.log('==== Requesting user fragments data by ' + id + ' ====');
 
   try {
-    const res = await fetch(`${apiUrl}/v1/fragments/${id}.${ext}`, {
-      headers: user.authorizationHeaders(),
-    });
+    const res =
+      ext.length > 0
+        ? await fetch(`${apiUrl}/v1/fragments/${id}.${ext}`, {
+            headers: user.authorizationHeaders(),
+          })
+        : await fetch(`${apiUrl}/v1/fragments/${id}`, {
+            headers: user.authorizationHeaders(),
+          });
 
     if (!res.ok) {
       throw new Error(`${res.status} ${res.statusText}`);
