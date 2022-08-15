@@ -27,6 +27,7 @@
     "querystring-es3": "^0.2.1"
   },
   "dependencies": {
-    "aws-amplify": "^4.3.22"
+    "aws-amplify": "^4.3.22",
+    "mime": "^3.0.0"
   }
 }
