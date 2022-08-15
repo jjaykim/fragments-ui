@@ -75,12 +75,7 @@ import {
 } from './uiElements/deleteUIElements';
 
 async function init() {
-  // Get our UI elements
-  const deleteBtn = document.getElementById('deleteBtn');
-  // const fragmentSection = document.querySelector('#fragment');
-  const textFormSection = document.querySelector('#textFormSection');
-
-  // @@@@@@@@@@@@ User Login and Logout Section @@@@@@@@@@@@
+  // User Login and Logout Section
   const userSection = document.querySelector('#user');
   const loginBtn = document.querySelector('#login');
   const logoutBtn = document.querySelector('#logout');
@@ -121,10 +116,9 @@ async function init() {
 
   // Disable the Login button
   loginBtn.disabled = true;
-  // @@@@@@@@@@@@ User Login and Logout Section @@@@@@@@@@@@
 
+  // Gets user's all fragment data
   const getAllFragments = async () => {
-    // Gets user's all fragment data
     const fragment = await getUserFragments(user);
 
     while (displayFragmentListSelect.hasChildNodes()) {
@@ -162,6 +156,7 @@ async function init() {
     }
   };
 
+  // Generate default HTML formed string to display fragment's info
   const creatinginnerHTML = (id, type, created, updated) => {
     return `
     <span style="font-size: 18px; font-weight: bold">ID: </span>
@@ -180,7 +175,7 @@ async function init() {
   `;
   };
 
-  // ~~~~~~~~~~~~~~~~
+  // Main CURD feature Button Section
   let selectedFeature;
   btnSection.addEventListener('click', async (e) => {
     e.preventDefault();
@@ -201,6 +196,7 @@ async function init() {
     displaySpecificFragmentSection.hidden = true;
     createFragmentDataSection.hidden = true;
 
+    // case of display feature
     if (e.target.id === 'displayFeatureBtn') {
       selectedFeature = 'displayFeature';
 
@@ -212,6 +208,7 @@ async function init() {
       await getAllFragments();
     }
 
+    // case of create feature
     if (e.target.id === 'createFeatureBtn') {
       selectedFeature = 'createFeature';
 
@@ -235,6 +232,7 @@ async function init() {
       createImportFileBoxLabel.innerText = '3. Import a file';
     }
 
+    // case of convert feature
     if (e.target.id === 'convertFeatureBtn') {
       selectedFeature = 'convertFeature';
 
@@ -254,6 +252,7 @@ async function init() {
       await getAllFragments();
     }
 
+    // case of update feature
     if (e.target.id === 'updateFeatureBtn') {
       selectedFeature = 'updateFeature';
 
@@ -266,6 +265,7 @@ async function init() {
       await getAllFragments();
     }
 
+    // case of delete feature
     if (e.target.id === 'deleteFeatureBtn') {
       selectedFeature = 'deleteFeature';
       deleteFeatureBtn.disabled = true;
@@ -277,8 +277,8 @@ async function init() {
       deletedInformBox.innerText = '';
     }
   });
-  // ~~~~~~~~~~~~~~~~
 
+  // It is displayed a Fragment infomation depending on the main feature
   displayFragmentListSelect.addEventListener('change', async (e) => {
     e.preventDefault();
     displaySpecificFragmentBox.innerHTML = '';
@@ -350,6 +350,7 @@ async function init() {
     }
   });
 
+  // Convert the Fragment
   convertTypeForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -387,7 +388,7 @@ async function init() {
     }
   });
 
-  // ======== Create Section ========
+  // ======== Create and Update Section ========
   // Variables
   let importedFile = undefined;
   let importedFileType = '';
@@ -649,6 +650,8 @@ async function init() {
     }
   });
 
+  // ======== Delete Section ========
+  // Track how to delete
   deleteOptions.addEventListener('click', async (e) => {
     if (e.target.id === 'deleteSpecificFragment') {
       deleteSpecificFragment.disabled = true;
@@ -678,6 +681,7 @@ async function init() {
     }
   });
 
+  // Delete the Fragment
   deleteSubmitBtn.onclick = async () => {
     try {
       if (deleteSpecificFragment.disabled) {
