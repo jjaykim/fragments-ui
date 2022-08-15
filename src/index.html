@@ -9,6 +9,7 @@
 </head>
 
 <body>
+  <br>
   <h1>Fragments UI</h1>
   <section>
     <nav><button id="login">Login</button> <button id="logout">Logout</button></nav>
@@ -17,48 +18,153 @@
     <h2>Hello <span class="username"></span>!</h2>
   </section>
 
-  <h3>Create a fragment</h3>
-  <section id="type">
-    <h4>###### First step ######</h4>
-    <label for="types">Choose a fragment type:</label>
-    <select id="types" name="typeList" form="typeform">
-      <option value="text/plain">text/plain</option>
-      <option value="text/markdown">text/markdown</option>
-      <option value="text/html">text/html</option>
-      <option value="application/json">application/json</option>
-      <option value="application/json" disabled>image/png</option>
-      <option value="application/json" disabled>image/jpeg</option>
-      <option value="application/json" disabled>image/webp</option>
-      <option value="application/json" disabled>image/gif</option>
-    </select>
+  <br>
+
+  <section id="features">
+    <h4 for="features">What do you want to do with fragments app?</h4>
+    <nav>
+      <button id="displayFeatureBtn">Display Fragment</button> &nbsp;&nbsp;
+      <button id="createFeatureBtn">Create Fragment</button> &nbsp;&nbsp;
+      <button id="convertFeatureBtn">Convert Fragment</button> &nbsp;&nbsp;
+      <button id="updateFeatureBtn">Update Fragment</button> &nbsp;&nbsp;
+      <button id="deleteFeatureBtn">Delete Fragment</button>
+    </nav>
   </section>
 
-  <br />
-  <br />
+  <section hidden id="deleteFeatureSection">
+    <section id="deleteOptions">
+      <h2>1. Choose how to delete </h2>
+      <nav>
+        <button id="deleteSpecificFragment">Delete specific fragment</button> &nbsp;&nbsp;
+        <button id="deleteAllFragment">Delete all fragments</button> &nbsp;&nbsp;
+      </nav>
+    </section>
+  </section>
 
-  <div>
-    <h4>###### Second step ######</h4>
-    <section id="textFormSection">
-      <form id="textForm">
-        <label for="textFragment">Enter some text:</label>
-        <input type="text" id="textFragment" name="textFragment" placeholder="Enter fragment">
+  <!-- View All Fragment Section -->
+  <section id="displayFeatureSection">
+    <section hidden id="displayFragmentListSection">
+      <h2 id="displayFragmentListSectionTitle"></h2>
+
+      <label id="displayFragmentsListLabel" for="fragmentList"></label>
+      <select id="displayFragmentListSelect" name="fragmentList">
+      </select>
+    </section>
+
+    <section hidden id="displaySpecificFragmentSection">
+      <h3>Fragment Info</h3>
+      <p id="displaySpecificFragmentBox"></p>
+      <p id="displaySpecificFragmentDataBox"></p>
+      <img id="displaySpecificFragmentImageBox" />
+    </section>
+  </section>
+
+  <!-- Input Fragment Section -->
+  <section hidden id="createFragmentDataSection">
+    <section hidden id="createOptionSection">
+      <h2 id="createOptionSectionTitle">Create a fragment</h2>
+      <label id="createOptionSectionLabe">1. Select how to create the Fragment</label>
+      <nav><button id="textOptionBtn">Write a Text</button> &nbsp;&nbsp; <button id="fileOptionBtn">Import a
+          file</button>
+      </nav>
+    </section>
+
+    <br />
+
+    <section hidden id="createTypeSection">
+      <label for="types">2. Choose a fragment type:</label>
+      <select id="types" name="typeList" form="typeform">
+        <option id="textPlanOpt" value="text/plain">text/plain</option>
+        <option id="textMarkdownOpt" value="text/markdown">text/markdown</option>
+        <option id="textHtmlOpt" value="text/html">text/html</option>
+        <option id="applicationJsonOpt" value="application/json">application/json</option>
+        <option id="imagePngOpt" value="image/png">image/png</option>
+        <option id="imageJpegOpt" value="image/jpeg">image/jpeg</option>
+        <option id="imageWebpOpt" value="image/webp">image/webp</option>
+        <option id="imageGifOpt" value="image/gif">image/gif</option>
+      </select>
+    </section>
+
+    <br />
+
+    <section id="createFormSection">
+      <form id="createForm">
+        <section hidden id="createTextInputBox">
+          <label id="createTextInputBoxLabel" for="textInput">3. Enter the data</label>
+          <input type="text" id="createTextInput" name="textInput" placeholder="Enter fragment">
+        </section>
+
+        <section hidden id="createImportFileBox">
+          <label id="createImportFileBoxLabel" for="createImportFile"></label>
+          <input type="file" id="createImportFile">
+        </section>
 
         <br />
-        <br />
 
-        <input type="submit" value="Submit">
+        <input disabled id="createSubmitBtn" type="submit" value="Submit">
       </form>
     </section>
-  </div>
+  </section>
+
+  <!-- Create Fragment Section -->
+  <section hidden id="createFeatureSection">
+    <h2>Successfully Created your Fragment</h2>
+    <p id="createdFragmentBox"></p>
+    <p id="createdFragmentTextBox"></p>
+    <img id="createdFragmentImageBox" />
+  </section>
+
+  <!-- Convert Fragment Section -->
+  <section hidden id="convertFeatureSection">
+    <section hidden id="convertTypeSection">
+      <h2>2. Choose a type to convert to</h2>
+      <form id="convertTypeForm">
+        <select id="convertTypes" name="convertTypeList" form="convertTypeForm">
+          <option value="none">No conversion</option>
+          <option value="txt">text/plain</option>
+          <option value="md">text/markdown</option>
+          <option value="html">text/html</option>
+          <option value="json">application/json</option>
+          <option value="png">image/png</option>
+          <option value="jpeg">image/jpeg</option>
+          <option value="webp">image/webp</option>
+          <option value="gif">image/gif</option>
+        </select>
+
+        <br />
+        <br />
+        <input type="submit" value="Convert the fragment">
+      </form>
+    </section>
 
 
-  <h2>Your all text:</h2>
-  <p class="fragment"></p>
+    <section hidden id="convertedFragmentSection">
+      <h2>Converted Fragment Data</h2>
 
+      <p id="convertedFragmentBox"></p>
+      <p id="convertedFragmentDataBox"></p>
+      <img id="convertedFragmentImageBox" />
+    </section>
+  </section>
 
-  <h2>Delete your all Fragments</h2>
-  <button id="deleteBtn">Delete a fragment</button>
+  <section hidden id="updateFeatureSection">
+    <h2>Successfully Updated your Fragment</h2>
+    <p id="updatedFragmentBox"></p>
+    <p id="updatedFragmentTextBox"></p>
+    <img id="updatedFragmentImageBox" />
+  </section>
 
+  <section hidden id="deleteSubmitSection">
+    <section id="deleteSubmitBtnSection">
+      <br />
+      <button id="deleteSubmitBtn"></button>
+    </section>
+
+    <section id="deletedInformBoxSection">
+      <br />
+      <p id="deletedInformBox"></p>
+    </section>
+  </section>
 
 </body>
 
