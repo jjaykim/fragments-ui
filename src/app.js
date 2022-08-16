@@ -149,6 +149,8 @@ async function init() {
         displayFragmentListSelect.appendChild(fragmentOption);
       });
     } else {
+      displayFragmentsListLabel.innerText = 'Total Fragements: 0';
+
       const option = new Option();
       option.value = 'none';
       option.text = 'There is no any Fragments';
@@ -353,6 +355,8 @@ async function init() {
   // Convert the Fragment
   convertTypeForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    convertedFragmentDataBox.hidden = true;
+    convertedFragmentImageBox.hidden = true;
 
     const selectedConversionType = document.getElementById('convertTypes').value;
 
@@ -373,8 +377,10 @@ async function init() {
 
         if (selectedFragment.fragment && data) {
           if (selectedFragment.fragment.type.startsWith('image/')) {
+            convertedFragmentImageBox.hidden = false;
             convertedFragmentImageBox.src = window.URL.createObjectURL(data);
           } else {
+            convertedFragmentDataBox.hidden = false;
             convertedFragmentDataBox.innerText =
               typeof data === 'object' ? JSON.stringify(data) : data;
           }
@@ -477,6 +483,8 @@ async function init() {
   // 3. Submit
   createForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    updatedFragmentTextBox.hidden = true;
+    updatedFragmentImageBox.hidden = true;
 
     // When a user imported a file
     if (!!importedFile) {
@@ -516,8 +524,10 @@ async function init() {
                   createdFragmentBox.innerHTML = fragementHTML;
 
                   if (selectedType.startsWith('image/')) {
+                    updatedFragmentImageBox.hidden = false;
                     createdFragmentImageBox.src = window.URL.createObjectURL(data);
                   } else {
+                    updatedFragmentTextBox.hidden = false;
                     createdFragmentTextBox.innerHTML =
                       typeof data === 'object' ? JSON.stringify(data) : data;
                   }
@@ -556,8 +566,10 @@ async function init() {
                   updatedFragmentBox.innerHTML = fragementHTML;
 
                   if (selectedType.startsWith('image/')) {
+                    updatedFragmentImageBox.hidden = false;
                     updatedFragmentImageBox.src = window.URL.createObjectURL(data);
                   } else {
+                    updatedFragmentTextBox.hidden = false;
                     updatedFragmentTextBox.innerHTML =
                       typeof data === 'object' ? JSON.stringify(data) : data;
                   }
@@ -635,6 +647,7 @@ async function init() {
 
                 updatedFragmentBox.innerHTML = fragementHTML;
 
+                updatedFragmentTextBox.hidden = false;
                 updatedFragmentTextBox.innerHTML =
                   typeof data === 'object' ? JSON.stringify(data) : data;
               }
@@ -658,6 +671,7 @@ async function init() {
       deleteAllFragment.disabled = false;
       deleteSubmitSection.hidden = true;
       deleteSubmitBtn.innerText = 'Delete!';
+      deleteSubmitBtnSection.hidden = false;
 
       displayFeatureSection.hidden = false;
       displayFragmentListSection.hidden = false;
@@ -673,6 +687,7 @@ async function init() {
       deleteSpecificFragment.disabled = false;
       displayFeatureSection.hidden = true;
       displaySpecificFragmentSection.hidden = true;
+      deleteSubmitBtnSection.hidden = false;
 
       deleteSubmitSection.hidden = false;
       deleteSubmitBtn.innerText = 'Delete All!';
